@@ -18,6 +18,7 @@ const FILES = [
   "research/06-mlab-prive-strategy.md",
   "research/07-sync-collab-and-broadcast.md",
   "research/08-vanguard-ritual-concepts.md",
+  "research/09-brand-architecture-and-essence.md",
 ];
 
 async function copyOne(rel) {

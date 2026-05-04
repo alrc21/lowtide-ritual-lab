@@ -10,6 +10,8 @@ import { DevialetTracker } from "@/components/DevialetTracker";
 import { InspirationGallery } from "@/components/InspirationGallery";
 import { Decisions } from "@/components/Decisions";
 import { Concepts } from "@/components/Concepts";
+import { Essence } from "@/components/Essence";
+import { Lanes } from "@/components/Lanes";
 import { tryReadMd, getResearch, getInspiration, getConcepts } from "@/lib/data";
 
 export default async function Home() {
@@ -26,10 +28,30 @@ export default async function Home() {
 
       <HairlineDivider />
       <Section
+        id="essence"
+        eyebrow="Section 01 · Why we exist"
+        title="Essence"
+        lede="Four pillars. Above the P&L. Each one is a sentence, a way to measure ourselves, and a list of what we refuse — because the rules of refusal are what make the rest possible."
+      >
+        <Essence />
+      </Section>
+
+      <HairlineDivider />
+      <Section
+        id="lanes"
+        eyebrow="Section 02 · The four ways of gathering"
+        title="Lanes"
+        lede="Lowtide is the music house. The lanes are the products. Afterglow for runners, Listening for Devialet-tier dusks, Privé for the underground (co-owned with Mlab, on aliases), Flagship for the 2× per year programmed arc. One brand, four postures, codified refusals."
+      >
+        <Lanes />
+      </Section>
+
+      <HairlineDivider />
+      <Section
         id="brief"
-        eyebrow="Section 01 · Executive synthesis"
+        eyebrow="Section 03 · Executive synthesis"
         title="The Brief"
-        lede="Synthesis of four research documents. The strategic verdict, the 2026 revenue map, the three productised formats, and what Lowtide refuses."
+        lede="Synthesis of the research. Strategic verdict, 2026 revenue map, productised formats, what Lowtide refuses."
       >
         {brief ? (
           <Md>{brief.content}</Md>
@@ -41,7 +63,7 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="decisions"
-        eyebrow="Section 02 · Open strategic forks"
+        eyebrow="Section 04 · Open strategic forks"
         title="Decisions"
         lede="Where Lowtide is at a fork. Each decision shows the recommendation, why, the options weighed, and what to do next. Deeper analysis lives in Research."
       >
@@ -51,9 +73,9 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="research"
-        eyebrow="Section 03 · Phase 1 deliverables"
+        eyebrow="Section 05 · Phase 1 deliverables"
         title="Research"
-        lede="Four self-contained documents. Each ends with concrete implications for Lowtide. Numbers flagged [verify] need a sourcing pass before externalising."
+        lede="Self-contained documents — each ends with concrete implications for Lowtide. Numbers flagged [verify] need a sourcing pass before externalising."
       >
         <ResearchGrid docs={research} />
       </Section>
@@ -61,9 +83,9 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="inspiration"
-        eyebrow="Section 04 · What already worked"
+        eyebrow="Section 06 · What already worked"
         title="Inspiration Gallery"
-        lede="A sourcebook of real events from Daybreaker, Devialet, wellness × music, run-clubs, and Spain-anchored peers. Mechanics, formats, and EUR pricing — picked apart for what Lowtide can steal. Concept seeds at the bottom turn the references into Valencia-specific ideas."
+        lede="A sourcebook of real events from Daybreaker, Devialet, wellness × music, run-clubs, and Spain-anchored peers. Mechanics, formats, EUR pricing. Concept seeds at the bottom turn the references into Valencia-specific ideas."
       >
         {inspiration ? (
           <InspirationGallery data={inspiration} />
@@ -75,9 +97,9 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="concepts"
-        eyebrow="Section 05 · The Lowtide product line"
+        eyebrow="Section 07 · The Lowtide product line"
         title="Concepts"
-        lede="Eight named, vanguard ritual concepts — Mediterranean coding, Devialet-tier production, ranged for Valencia first. Each card is the seed of a real event; the full doc adds run-of-show details, P&Ls, and a 90-day validation roadmap."
+        lede="Eight named ritual concepts — Mediterranean coding, Devialet-tier production, ranged for Valencia first. Each card is the seed of a real event."
       >
         <Concepts concepts={concepts} />
       </Section>
@@ -85,7 +107,7 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="identity"
-        eyebrow="Section 06 · Define the project"
+        eyebrow="Section 08 · Define the project"
         title="Identity Canvas"
         lede="The questions that turn research into a product. Fill these in your voice — drafts auto-save to your browser. Download as Markdown when you're ready to hand it to Claude or paste into IDENTITY.md."
       >
@@ -95,21 +117,15 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="pipeline"
-        eyebrow="Section 07 · Bookings & flagships"
-        title="Pipeline"
-        lede="B2B opportunities and the four ticketed flagships of 2026 — Equinox, Vespertina, Salar, Marea."
+        eyebrow="Section 09 · Operations"
+        title="Pipeline & Devialet"
+        lede="The operational layer below the values. B2B opportunities, the four flagships, and the Devialet deal sequence A → B → C."
       >
-        <Pipeline />
-      </Section>
-
-      <HairlineDivider />
-      <Section
-        id="devialet"
-        eyebrow="Section 08 · The credibility multiplier"
-        title="Devialet Tracker"
-        lede="The deal sequence is A → B → C, never D. Event 1 is the decision."
-      >
-        <DevialetTracker />
+        <div className="space-y-16 sm:space-y-20">
+          <Pipeline />
+          <div className="hairline" />
+          <DevialetTracker />
+        </div>
       </Section>
 
       <HairlineDivider />
@@ -122,7 +138,7 @@ export default async function Home() {
             <div className="label text-muted">Valencia · Spain · 2026</div>
           </div>
           <div className="text-sm text-muted max-w-md">
-            This dashboard is a local-first canvas. Every section is backed by a markdown file in the project vault. Edit there, reload, the canvas updates.
+            We&apos;re a Valencia music house with four ways of gathering — a run, a listening, a club, a ritual. Built to make us better DJs and a real community at the same time.
           </div>
         </div>
       </footer>

@@ -59,6 +59,11 @@ const RESEARCH_FILES: { slug: string; title: string; blurb: string }[] = [
     title: "Vanguard Ritual Concepts",
     blurb: "Eight named high-end event concepts (Vespertina, Marea, Ámbar, Salar, Vigília, Ofrenda, Cenote, Lumbre). Mediterranean coding, Devialet-tier production, P&Ls for three.",
   },
+  {
+    slug: "09-brand-architecture-and-essence",
+    title: "Brand Architecture & Essence",
+    blurb: "From two brothers who DJ to a Mediterranean music house. Service-agency model, four named lanes, two-phased artist aliases, four essence pillars, ten Valencia venue prospects.",
+  },
 ];
 
 export type InspirationEvent = {

@@ -1,12 +1,12 @@
 const items = [
+  { href: "#essence", label: "Essence" },
+  { href: "#lanes", label: "Lanes" },
   { href: "#brief", label: "Brief" },
   { href: "#decisions", label: "Decisions" },
   { href: "#research", label: "Research" },
-  { href: "#inspiration", label: "Inspiration" },
   { href: "#concepts", label: "Concepts" },
   { href: "#identity", label: "Identity" },
-  { href: "#pipeline", label: "Pipeline" },
-  { href: "#devialet", label: "Devialet" },
+  { href: "#pipeline", label: "Ops" },
 ];
 
 export function Nav() {

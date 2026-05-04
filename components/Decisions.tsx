@@ -48,6 +48,25 @@ const decisions: Decision[] = [
     ],
     doc: { slug: "07-sync-collab-and-broadcast", label: "Read the Sync collab + distribution doc" },
   },
+  {
+    question: "Should Alberto and his brother grow individual DJ aliases alongside Lowtide?",
+    recommendation:
+      "Yes — in two phases. Each brother takes a private artist alias for SoundCloud, Beatport, RA, Spotify, and selection-led Mlab/Privé bookings. The duo billing \"Lowtide\" stays the public face for the first 12 months. Once each alias has 4–6 released tracks and a defensible solo identity, reintroduce the aliases publicly so the duo becomes \"[Alias 1] + [Alias 2], also known as Lowtide\" — the Bedouin / Adam Ten / Adriatique architecture.",
+    why:
+      "A duo named after a vibe will never be booked at a real underground night by a serious promoter — that promoter wants an artist with a discography. Without aliases, every Mlab and Privé booking is a favour. With aliases, the booking earns itself. Two parallel growth curves on Spotify/SoundCloud also give Lowtide three different stories to tell three different sponsors. Tale of Us split (Carmine kept the name, Matteo launched Anyma) is the cautionary case for why aliases are insurance.",
+    options: [
+      { code: "A", title: "No aliases. Stay duo-only as Lowtide.", verdict: "no-go" },
+      { code: "B", title: "Two-phased aliases — private year 1, public year 2.", verdict: "go" },
+      { code: "C", title: "Public aliases from day one.", verdict: "fallback" },
+    ],
+    next: [
+      "Each brother picks a working alias name. Rules: 2–3 syllables, pronounceable in ES + EN, no real concept-word, EUIPO TMView-clean, RA-search-clean.",
+      "Open SoundCloud + Spotify for Artists profiles. Cap IG to one private account per alias, posted 4–6× per year.",
+      "First Mlab/Privé booking goes on the lineup under the aliases, not as Lowtide.",
+      "12-month review: 4–6 released tracks each + 1 guest mix on a respectable show before going public as a duo billing.",
+    ],
+    doc: { slug: "09-brand-architecture-and-essence", label: "Read the brand architecture doc" },
+  },
 ];
 
 const verdictStyles: Record<Decision["options"][number]["verdict"], string> = {
