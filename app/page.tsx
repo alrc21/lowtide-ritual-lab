@@ -12,13 +12,15 @@ import { Decisions } from "@/components/Decisions";
 import { Concepts } from "@/components/Concepts";
 import { Essence } from "@/components/Essence";
 import { Lanes } from "@/components/Lanes";
-import { tryReadMd, getResearch, getInspiration, getConcepts } from "@/lib/data";
+import { Briefings } from "@/components/Briefings";
+import { tryReadMd, getResearch, getInspiration, getConcepts, getBriefings } from "@/lib/data";
 
 export default async function Home() {
   const brief = await tryReadMd("BRIEF.md");
   const research = await getResearch();
   const inspiration = await getInspiration();
   const concepts = await getConcepts();
+  const briefings = await getBriefings();
 
   return (
     <main>
@@ -48,8 +50,18 @@ export default async function Home() {
 
       <HairlineDivider />
       <Section
+        id="briefings"
+        eyebrow="Section 03 · Team meetings"
+        title="Briefings"
+        lede="Every team meeting lives here as a structured card — roles, action items with deadlines and owners, timeline. Drop a markdown file into briefings/ in the vault and the dashboard parses it on the next sync."
+      >
+        <Briefings briefings={briefings} />
+      </Section>
+
+      <HairlineDivider />
+      <Section
         id="brief"
-        eyebrow="Section 03 · Executive synthesis"
+        eyebrow="Section 04 · Executive synthesis"
         title="The Brief"
         lede="Synthesis of the research. Strategic verdict, 2026 revenue map, productised formats, what Lowtide refuses."
       >
@@ -63,7 +75,7 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="decisions"
-        eyebrow="Section 04 · Open strategic forks"
+        eyebrow="Section 05 · Open strategic forks"
         title="Decisions"
         lede="Where Lowtide is at a fork. Each decision shows the recommendation, why, the options weighed, and what to do next. Deeper analysis lives in Research."
       >
@@ -73,7 +85,7 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="research"
-        eyebrow="Section 05 · Phase 1 deliverables"
+        eyebrow="Section 06 · Phase 1 deliverables"
         title="Research"
         lede="Self-contained documents — each ends with concrete implications for Lowtide. Numbers flagged [verify] need a sourcing pass before externalising."
       >
@@ -83,7 +95,7 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="inspiration"
-        eyebrow="Section 06 · What already worked"
+        eyebrow="Section 07 · What already worked"
         title="Inspiration Gallery"
         lede="A sourcebook of real events from Daybreaker, Devialet, wellness × music, run-clubs, and Spain-anchored peers. Mechanics, formats, EUR pricing. Concept seeds at the bottom turn the references into Valencia-specific ideas."
       >
@@ -97,7 +109,7 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="concepts"
-        eyebrow="Section 07 · The Lowtide product line"
+        eyebrow="Section 08 · The Lowtide product line"
         title="Concepts"
         lede="Eight named ritual concepts — Mediterranean coding, Devialet-tier production, ranged for Valencia first. Each card is the seed of a real event."
       >
@@ -107,7 +119,7 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="identity"
-        eyebrow="Section 08 · Define the project"
+        eyebrow="Section 09 · Define the project"
         title="Identity Canvas"
         lede="The questions that turn research into a product. Fill these in your voice — drafts auto-save to your browser. Download as Markdown when you're ready to hand it to Claude or paste into IDENTITY.md."
       >
@@ -117,7 +129,7 @@ export default async function Home() {
       <HairlineDivider />
       <Section
         id="pipeline"
-        eyebrow="Section 09 · Operations"
+        eyebrow="Section 10 · Operations"
         title="Pipeline & Devialet"
         lede="The operational layer below the values. B2B opportunities, the four flagships, and the Devialet deal sequence A → B → C."
       >

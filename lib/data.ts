@@ -172,6 +172,107 @@ export async function getInspiration(): Promise<InspirationData | null> {
   };
 }
 
+export type Briefing = {
+  slug: string;
+  date: string;
+  title: string;
+  status: string;
+  intro: string;
+  roles: { role: string; owner: string }[];
+  actions: { task: string; deadline: string; owner: string; note: string }[];
+  timeline: { milestone: string; when: string }[];
+};
+
+const stripEmoji = (s: string) =>
+  s
+    .replace(/[\u{1F300}-\u{1FAFF}\u{1F000}-\u{1F2FF}\u{2600}-\u{27BF}\u{1F600}-\u{1F64F}\u{1F900}-\u{1F9FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}\u{2B00}-\u{2BFF}\u{1F100}-\u{1F1FF}]/gu, "")
+    .replace(/‍/g, "")
+    .replace(/️/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
+function splitOwner(line: string): { task: string; rest: string[] } {
+  const parts = line.split(/\s+—\s+|\s+-\s+/);
+  return { task: parts[0].trim(), rest: parts.slice(1).map((p) => p.trim()) };
+}
+
+export async function getBriefings(): Promise<Briefing[]> {
+  const dir = path.resolve(process.cwd(), "content", "briefings");
+  let files: string[] = [];
+  try {
+    files = (await fs.readdir(dir)).filter((f) => f.endsWith(".md"));
+  } catch {
+    return [];
+  }
+
+  const briefings: Briefing[] = [];
+  for (const f of files) {
+    const raw = await fs.readFile(path.join(dir, f), "utf8");
+    const { data, content } = matter(raw);
+    const slug = f.replace(/\.md$/, "");
+
+    const sectionMap: Record<string, string> = {};
+    const sectionHits = [...content.matchAll(/^## (.+)$/gm)];
+    for (let i = 0; i < sectionHits.length; i++) {
+      const h = sectionHits[i];
+      const next = sectionHits[i + 1];
+      const start = (h.index ?? 0) + h[0].length;
+      const end = next ? next.index : content.length;
+      sectionMap[h[1].trim().toLowerCase()] = content.slice(start, end).trim();
+    }
+
+    const intro = content.slice(0, sectionHits[0]?.index ?? content.length).trim();
+
+    const parseList = (block?: string) => {
+      if (!block) return [];
+      return block
+        .split("\n")
+        .map((l) => l.match(/^\s*-\s+(.+)$/))
+        .filter((m): m is RegExpMatchArray => Boolean(m))
+        .map((m) => stripEmoji(m[1]));
+    };
+
+    const rolesRaw = parseList(sectionMap["roles"]);
+    const roles = rolesRaw.map((line) => {
+      const m = line.match(/^(.+?)\s+—\s+(.+)$/) || line.match(/^(.+?)\s+-\s+(.+)$/);
+      if (m) return { role: m[1].trim(), owner: m[2].trim() };
+      return { role: line, owner: "" };
+    });
+
+    const actionsRaw = parseList(sectionMap["action items"]);
+    const actions = actionsRaw.map((line) => {
+      const noteMatch = line.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
+      const noNote = noteMatch ? noteMatch[1].trim() : line;
+      const note = noteMatch ? noteMatch[2].trim() : "";
+      const parts = noNote.split(/\s+—\s+/);
+      const task = parts[0]?.trim() || "";
+      const deadline = parts[1]?.trim() || "";
+      const owner = parts.slice(2).join(" — ").trim();
+      return { task, deadline, owner, note };
+    });
+
+    const timelineRaw = parseList(sectionMap["timeline"]);
+    const timeline = timelineRaw.map((line) => {
+      const parts = line.split(/\s+—\s+/);
+      return { milestone: parts[0]?.trim() || "", when: parts.slice(1).join(" — ").trim() };
+    });
+
+    briefings.push({
+      slug,
+      date: String(data.date || slug.slice(0, 10)),
+      title: stripEmoji(String(data.title || slug)),
+      status: String(data.status || ""),
+      intro: stripEmoji(intro.replace(/^>\s*/gm, "")),
+      roles,
+      actions,
+      timeline,
+    });
+  }
+
+  briefings.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return briefings;
+}
+
 export type Concept = {
   num: number;
   name: string;

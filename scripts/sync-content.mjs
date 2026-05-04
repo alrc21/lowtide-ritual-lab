@@ -34,6 +34,22 @@ async function copyOne(rel) {
   return { rel, ok: true };
 }
 
+async function syncDir(rel) {
+  const srcDir = path.join(VAULT, rel);
+  const dstDir = path.join(TARGET, rel);
+  try {
+    await fs.access(srcDir);
+  } catch {
+    return { rel, ok: false, count: 0, reason: "missing in vault" };
+  }
+  await fs.mkdir(dstDir, { recursive: true });
+  const files = (await fs.readdir(srcDir)).filter((f) => f.endsWith(".md"));
+  for (const f of files) {
+    await fs.copyFile(path.join(srcDir, f), path.join(dstDir, f));
+  }
+  return { rel, ok: true, count: files.length };
+}
+
 async function main() {
   await fs.mkdir(TARGET, { recursive: true });
   const results = await Promise.all(FILES.map(copyOne));
@@ -41,6 +57,10 @@ async function main() {
   const skipped = results.filter((r) => !r.ok);
   console.log(`[sync-content] ${ok}/${FILES.length} files synced from vault → content/`);
   for (const s of skipped) console.log(`  · skipped ${s.rel} (${s.reason})`);
+
+  const briefings = await syncDir("briefings");
+  if (briefings.ok) console.log(`[sync-content] ${briefings.count} briefings synced`);
+  else console.log(`  · briefings dir skipped (${briefings.reason})`);
 }
 
 main().catch((e) => {

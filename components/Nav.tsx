@@ -1,6 +1,7 @@
 const items = [
   { href: "#essence", label: "Essence" },
   { href: "#lanes", label: "Lanes" },
+  { href: "#briefings", label: "Briefings" },
   { href: "#brief", label: "Brief" },
   { href: "#decisions", label: "Decisions" },
   { href: "#research", label: "Research" },
