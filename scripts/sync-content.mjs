@@ -21,6 +21,27 @@ const FILES = [
   "research/09-brand-architecture-and-essence.md",
 ];
 
+// Strategy docs live flat in the vault root but are exposed under content/strategy/
+// with stable, route-friendly slugs. { src in vault → dst in content }.
+const STRATEGY_MAP = [
+  { src: "LOWTIDE-SINTESIS.md", dst: "strategy/01-sintesis-proyecto.md" },
+  { src: "VENUES-VALENCIA.md", dst: "strategy/02-venues-valencia.md" },
+  { src: "PLAN-EVENTOS-SPONSORS.md", dst: "strategy/03-plan-eventos-sponsors.md" },
+];
+
+async function copyMapped(src, dst) {
+  const s = path.join(VAULT, src);
+  const d = path.join(TARGET, dst);
+  try {
+    await fs.access(s);
+  } catch {
+    return { rel: dst, ok: false, reason: "missing in vault" };
+  }
+  await fs.mkdir(path.dirname(d), { recursive: true });
+  await fs.copyFile(s, d);
+  return { rel: dst, ok: true };
+}
+
 async function copyOne(rel) {
   const src = path.join(VAULT, rel);
   const dst = path.join(TARGET, rel);
@@ -57,6 +78,11 @@ async function main() {
   const skipped = results.filter((r) => !r.ok);
   console.log(`[sync-content] ${ok}/${FILES.length} files synced from vault → content/`);
   for (const s of skipped) console.log(`  · skipped ${s.rel} (${s.reason})`);
+
+  const strategyResults = await Promise.all(STRATEGY_MAP.map((m) => copyMapped(m.src, m.dst)));
+  const strategyOk = strategyResults.filter((r) => r.ok).length;
+  console.log(`[sync-content] ${strategyOk}/${STRATEGY_MAP.length} strategy docs synced from vault → content/strategy/`);
+  for (const s of strategyResults.filter((r) => !r.ok)) console.log(`  · skipped ${s.rel} (${s.reason})`);
 
   const briefings = await syncDir("briefings");
   if (briefings.ok) console.log(`[sync-content] ${briefings.count} briefings synced`);

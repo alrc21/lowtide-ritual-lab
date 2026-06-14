@@ -66,6 +66,32 @@ const RESEARCH_FILES: { slug: string; title: string; blurb: string }[] = [
   },
 ];
 
+export type StrategyDoc = {
+  slug: string;
+  title: string;
+  blurb: string;
+  body: string;
+  words: number;
+};
+
+const STRATEGY_FILES: { slug: string; title: string; blurb: string }[] = [
+  {
+    slug: "01-sintesis-proyecto",
+    title: "Síntesis del proyecto",
+    blurb: "El destilado maestro de toda la investigación: qué es Lowtide en una línea, el veredicto estratégico B2B↔ritual, el mapa de ingresos 2026 y las refusals. Si solo lees un documento, es este.",
+  },
+  {
+    slug: "02-venues-valencia",
+    title: "Venues Valencia",
+    blurb: "Mapa de espacios reales de Valencia mapeados a los formatos Lowtide — aforos, categorías de licencia y aptitud para música amplificada. Datos no confirmados marcados [no verificado].",
+  },
+  {
+    slug: "03-plan-eventos-sponsors",
+    title: "Plan de eventos y sponsors",
+    blurb: "Plan de acción comercial: calendario de eventos, secuencia de sponsors y partners de audio. Construye sobre la síntesis y el mapa de venues sin repetirlos.",
+  },
+];
+
 export type InspirationEvent = {
   num: number;
   title: string;
@@ -320,6 +346,22 @@ export async function getConcepts(): Promise<Concept[]> {
       devialetFit: grab("Devialet fit"),
       risk: grab("Risk & mitigation"),
       signature: grab("Signature ritual mechanic"),
+    });
+  }
+  return out;
+}
+
+export async function getStrategy(): Promise<StrategyDoc[]> {
+  const out: StrategyDoc[] = [];
+  for (const f of STRATEGY_FILES) {
+    const md = await tryReadMd(`strategy/${f.slug}.md`);
+    if (!md) continue;
+    out.push({
+      slug: f.slug,
+      title: f.title,
+      blurb: f.blurb,
+      body: md.content,
+      words: md.content.split(/\s+/).length,
     });
   }
   return out;

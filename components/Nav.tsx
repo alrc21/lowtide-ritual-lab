@@ -5,6 +5,7 @@ const items = [
   { href: "#brief", label: "Brief" },
   { href: "#decisions", label: "Decisions" },
   { href: "#research", label: "Research" },
+  { href: "#strategy", label: "Strategy" },
   { href: "#concepts", label: "Concepts" },
   { href: "#identity", label: "Identity" },
   { href: "#pipeline", label: "Ops" },

@@ -4,6 +4,7 @@ import { MetricsRow } from "@/components/MetricsRow";
 import { Section, HairlineDivider } from "@/components/Section";
 import { Md } from "@/components/Md";
 import { ResearchGrid } from "@/components/ResearchGrid";
+import { StrategyGrid } from "@/components/StrategyGrid";
 import { IdentityCanvas } from "@/components/IdentityCanvas";
 import { Pipeline } from "@/components/Pipeline";
 import { DevialetTracker } from "@/components/DevialetTracker";
@@ -13,11 +14,12 @@ import { Concepts } from "@/components/Concepts";
 import { Essence } from "@/components/Essence";
 import { Lanes } from "@/components/Lanes";
 import { Briefings } from "@/components/Briefings";
-import { tryReadMd, getResearch, getInspiration, getConcepts, getBriefings } from "@/lib/data";
+import { tryReadMd, getResearch, getStrategy, getInspiration, getConcepts, getBriefings } from "@/lib/data";
 
 export default async function Home() {
   const brief = await tryReadMd("BRIEF.md");
   const research = await getResearch();
+  const strategy = await getStrategy();
   const inspiration = await getInspiration();
   const concepts = await getConcepts();
   const briefings = await getBriefings();
@@ -90,6 +92,16 @@ export default async function Home() {
         lede="Self-contained documents — each ends with concrete implications for Lowtide. Numbers flagged [verify] need a sourcing pass before externalising."
       >
         <ResearchGrid docs={research} />
+      </Section>
+
+      <HairlineDivider />
+      <Section
+        id="strategy"
+        eyebrow="Section 06b · Plan de ejecución"
+        title="Strategy"
+        lede="La capa de ejecución sobre la research, en español: la síntesis maestra del proyecto, el mapa de venues reales de Valencia y el plan comercial de eventos y sponsors. Documentos vivos — los datos sin confirmar van marcados [no verificado]."
+      >
+        <StrategyGrid docs={strategy} />
       </Section>
 
       <HairlineDivider />
