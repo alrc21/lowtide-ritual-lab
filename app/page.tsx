@@ -14,6 +14,7 @@ import { Concepts } from "@/components/Concepts";
 import { Essence } from "@/components/Essence";
 import { Lanes } from "@/components/Lanes";
 import { Briefings } from "@/components/Briefings";
+import { RideCloverProposal } from "@/components/RideCloverProposal";
 import { tryReadMd, getResearch, getStrategy, getInspiration, getConcepts, getBriefings } from "@/lib/data";
 
 export default async function Home() {
@@ -150,6 +151,16 @@ export default async function Home() {
           <div className="hairline" />
           <DevialetTracker />
         </div>
+      </Section>
+
+      <HairlineDivider />
+      <Section
+        id="rideclover"
+        eyebrow="Section 11 · Propuesta de partner"
+        title="RideClover"
+        lede="Brief de negociación para la junta presencial. RideClover suscribe e-bikes premium (battery-swap) y acaba de aterrizar en Valencia. Un paquete escalonado de 3 niveles — bicis embajadoras, referidos pagados por resultado, activación DJ en bici Duo — anclado en lo que su modelo más necesita: densidad local de suscriptores."
+      >
+        <RideCloverProposal />
       </Section>
 
       <HairlineDivider />

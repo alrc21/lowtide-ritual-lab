@@ -9,6 +9,7 @@ const items = [
   { href: "#concepts", label: "Concepts" },
   { href: "#identity", label: "Identity" },
   { href: "#pipeline", label: "Ops" },
+  { href: "#rideclover", label: "RideClover" },
 ];
 
 export function Nav() {
